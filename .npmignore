@@ -1,0 +1,12 @@
+node_modules/
+src/
+*.ts
+*.tsx
+tsconfig.json
+*.test.js
+*.spec.js
+*.config.js
+.DS_Store
+.git
+.gitignore
+.npmignore
