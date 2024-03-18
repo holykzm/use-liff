@@ -47,22 +47,44 @@ export default AppLayout;
 You can customize the error and loading screens by passing custom components to the `LiffProvider`.  
 `LiffProvider` にカスタムコンポーネントを渡すことで、エラー画面やロード画面をカスタマイズすることができます。
 
-```javascript
+```tsx
 // app/liff/layout.tsx
-import React from 'react';
-import { LiffProvider } from '@holykzm/use-liff';
-import CustomError from './components/CustomError';
-import CustomLoading from './components/CustomLoading';
+'use client' // 必須！
+import { LiffProvider } from "@holykzm/use-liff";
+import CustomError from "./_parts/CustomError";
+import { CustomLoading } from "./_parts/CustomLoading";
 
-const AppLayout: React.FC = ({ children }) => {
-  return (
-    <LiffProvider customError={<CustomError />} customLoading={<CustomLoading />}>
-      {children}
-    </LiffProvider>
-  );
-};
+export default function LiffLayout({ children }: { children: React.ReactNode }) {
+    return (
+        <LiffProvider
+            customError={CustomError}
+            customLoading={<CustomLoading />}
+        >
+            {children}
+        </LiffProvider>
+    );
+}
 
-export default AppLayout;
+```
+
+```tsx
+// app/liff/components/CustomError.tsx
+
+
+interface CustomErrorProps {
+    error: string;
+}
+
+const CustomError: React.FC<CustomErrorProps> = ({ error }) => {
+    return (
+        <div className="custom-error">
+            Error: {error}
+        </div>
+    );
+}
+
+export default CustomError;
+
 ```
 
 ### Accessing LIFF Functionality in Components / コンポーネントでの LIFF 機能へのアクセス

@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect, ReactNode, createContext, useContext } from 'react';
+import { useState, useEffect, ReactNode, createContext, useContext, ComponentType } from 'react';
 import type { Liff } from '@line/liff';
 import type { Profile } from "@liff/get-profile";
 
@@ -49,15 +49,21 @@ export const useLiff = () => {
     return { currentUser, liffControls, liffError };
 };
 
-export const LiffProvider: React.FC<{ children: ReactNode; customError?: ReactNode; customLoading?: ReactNode }> = ({ children, customError, customLoading }) => {
-    const liff = useLiff();
+interface LiffProviderProps {
+    children: ReactNode;
+    customError?: ComponentType<{ error: string }>;
+    customLoading?: ReactNode;
+}
 
-    const errorComponent = customError || <div>Error: {liff.liffError}</div>;
+export const LiffProvider: React.FC<LiffProviderProps> = ({ children, customError: CustomError, customLoading }) => {
+    const { currentUser, liffControls, liffError } = useLiff();
+
+    const errorComponent = liffError && CustomError ? <CustomError error={liffError} /> : null;
     const loadingComponent = customLoading || <div>Loading...</div>;
 
     return (
-        <LiffContext.Provider value={liff}>
-            {liff.liffError ? errorComponent : liff.currentUser ? children : loadingComponent}
+        <LiffContext.Provider value={{ currentUser, liffControls, liffError }}>
+            {errorComponent ? errorComponent : currentUser ? children : loadingComponent}
         </LiffContext.Provider>
     );
 };
