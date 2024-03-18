@@ -1,6 +1,6 @@
 {
   "name": "@holykzm/use-liff",
-  "version": "0.7.0",
+  "version": "0.9.0",
   "description": "A custom React hook and provider for LINE Frontend Framework (LIFF).",
   "main": "./dist/useLiff.js",
   "types": "./dist/useLiff.d.ts",
