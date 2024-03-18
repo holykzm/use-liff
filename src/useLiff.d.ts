@@ -1,4 +1,3 @@
-// index.d.ts
 declare module "@holykzm/use-liff" {
   import { ReactNode } from "react";
   import { Liff } from "@line/liff";

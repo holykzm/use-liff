@@ -1,6 +1,4 @@
 node_modules/
-*.ts
-*.tsx
 tsconfig.json
 *.test.js
 *.spec.js
