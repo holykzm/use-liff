@@ -1,4 +1,4 @@
-// app/hook/useLiff.tsx
+
 'use client'
 import { useState, useEffect, ReactNode, createContext, useContext } from 'react';
 import type { Liff } from '@line/liff';

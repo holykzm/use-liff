@@ -1,8 +1,8 @@
 {
   "name": "@holykzm/use-liff",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "description": "A custom React hook and provider for LINE Frontend Framework (LIFF).",
-  "main": "dist/index.ts",
+  "main": "dist/useLiff.js",
   "types": "dist/useLiff.d.ts",
   "scripts": {
     "build": "tsc"
@@ -34,5 +34,5 @@
   "bugs": {
     "url": "https://github.com/holykzm/use-liff/issues"
   },
-  "homepage": "https://github.com/holykzm/use-liff#readme"
+  "homepage": "https://github.com/holykzm/use-life/blob/main/README.md"
 }
