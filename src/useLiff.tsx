@@ -15,15 +15,15 @@ const LiffContext = createContext<LiffContextType>({
     liffError: null,
 });
 
-export const useLiff = () => {
+// useLiff フックを修正して liffId を引数として受け取る
+export const useLiff = (liffId: string) => {
     const [currentUser, setCurrentUser] = useState<Profile | null>(null);
     const [liffControls, setLiffControls] = useState<Liff | null>(null);
     const [liffError, setLiffError] = useState<string | null>(null);
 
     useEffect(() => {
-        const liffId = process.env.NEXT_PUBLIC_LIFF_ID;
         if (!liffId) {
-            console.error('LIFF ID is undefined. Please set NEXT_PUBLIC_LIFF_ID in your environment.');
+            console.error('LIFF ID is undefined. Please set it in your LiffProvider.');
             return;
         }
 
@@ -31,7 +31,7 @@ export const useLiff = () => {
             .then((liff) => liff.default)
             .then((liff) => {
                 liff
-                    .init({ liffId: process.env.NEXT_PUBLIC_LIFF_ID! })
+                    .init({ liffId })
                     .then(() => {
                         setLiffControls(liff);
                         if (liff.isLoggedIn()) {
@@ -44,7 +44,7 @@ export const useLiff = () => {
                         setLiffError(error.toString());
                     });
             });
-    }, []);
+    }, [liffId]);
 
     return { currentUser, liffControls, liffError };
 };
@@ -53,10 +53,11 @@ interface LiffProviderProps {
     children: ReactNode;
     customError?: ComponentType<{ error: string }>;
     customLoading?: ReactNode;
+    liffId: string; // liffId をpropsとして追加
 }
 
-export const LiffProvider: React.FC<LiffProviderProps> = ({ children, customError: CustomError, customLoading }) => {
-    const { currentUser, liffControls, liffError } = useLiff();
+export const LiffProvider: React.FC<LiffProviderProps> = ({ children, customError: CustomError, customLoading, liffId }) => {
+    const { currentUser, liffControls, liffError } = useLiff(liffId); // liffId を useLiff に渡す
 
     const errorComponent = liffError && CustomError ? <CustomError error={liffError} /> : null;
     const loadingComponent = customLoading || <div>Loading...</div>;
