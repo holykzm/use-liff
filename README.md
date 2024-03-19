@@ -56,7 +56,8 @@ import { CustomLoading } from "./_parts/CustomLoading";
 
 export default function LiffLayout({ children }: { children: React.ReactNode }) {
     return (
-        <LiffProvider
+    <LiffProvider
+            liffId={String(process.env.NEXT_PUBLIC_LIFF_ID)}
             customError={CustomError}
             customLoading={<CustomLoading />}
         >
