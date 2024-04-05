@@ -1,4 +1,3 @@
-
 # use-liff
 
 This is a custom hook for LINE Front-end Framework (LIFF) to simplify the usage of LIFF in your React applications.  
@@ -18,7 +17,7 @@ First, import the `LiffProvider` from `@holykzm/use-liff` into your application.
 まず、アプリケーションに `@holykzm/use-liff` から `LiffProvider` をインポートします。
 
 ```javascript
-import { LiffProvider } from '@holykzm/use-liff';
+import { LiffProvider } from "@holykzm/use-liff";
 ```
 
 ### Set up the LIFF Provider / LIFF プロバイダーの設定
@@ -28,15 +27,10 @@ Wrap your application with the `LiffProvider` component. Make sure to set up the
 
 ```javascript
 // app/liff/layout.tsx
-import React from 'react';
-import { LiffProvider } from '@holykzm/use-liff';
+import { LiffProvider } from "@holykzm/use-liff";
 
 const AppLayout: React.FC = ({ children }) => {
-  return (
-    <LiffProvider>
-      {children}
-    </LiffProvider>
-  );
+  return <LiffProvider liffId="必須">{children}</LiffProvider>;
 };
 
 export default AppLayout;
@@ -49,43 +43,41 @@ You can customize the error and loading screens by passing custom components to 
 
 ```tsx
 // app/liff/layout.tsx
-'use client' // 必須！
+"use client"; // 必須！
 import { LiffProvider } from "@holykzm/use-liff";
 import CustomError from "./_parts/CustomError";
 import { CustomLoading } from "./_parts/CustomLoading";
 
-export default function LiffLayout({ children }: { children: React.ReactNode }) {
-    return (
+export default function LiffLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
     <LiffProvider
-            liffId={String(process.env.NEXT_PUBLIC_LIFF_ID)}
-            customError={CustomError}
-            customLoading={<CustomLoading />}
-        >
-            {children}
-        </LiffProvider>
-    );
+      liffId={String(process.env.NEXT_PUBLIC_LIFF_ID)}
+      customError={CustomError}
+      customLoading={<CustomLoading />}
+      ifWebMoveTo="https://~WEBブラウザで開いた時にリダイレクトできます。"
+    >
+      {children}
+    </LiffProvider>
+  );
 }
-
 ```
 
 ```tsx
 // app/liff/components/CustomError.tsx
 
-
 interface CustomErrorProps {
-    error: string;
+  error: string;
 }
 
 const CustomError: React.FC<CustomErrorProps> = ({ error }) => {
-    return (
-        <div className="custom-error">
-            Error: {error}
-        </div>
-    );
-}
+  return <div className="custom-error">Error: {error}</div>;
+};
 
 export default CustomError;
-
 ```
 
 ### Accessing LIFF Functionality in Components / コンポーネントでの LIFF 機能へのアクセス
@@ -95,19 +87,19 @@ You can access the LIFF functionality in your components by using the `useLiffCo
 
 ```javascript
 // app/components/Profile.tsx
-import React from 'react';
-import { useLiffContext } from '@holykzm/use-liff';
+import React from "react";
+import { useLiffContext } from "@holykzm/use-liff";
 
 const Profile: React.FC = () => {
   const { currentUser, liffControls } = useLiffContext();
 
   // Accessing user profile
-  const profileName = currentUser?.displayName || 'Unknown';
+  const profileName = currentUser?.displayName || "Unknown";
 
   // Accessing LIFF functionality
   const sendMessage = () => {
     if (liffControls) {
-      liffControls.sendMessages([{ type: 'text', text: 'Hello, world!' }]);
+      liffControls.sendMessages([{ type: "text", text: "Hello, world!" }]);
     }
   };
 
@@ -141,4 +133,3 @@ Bug reports and feature suggestions are welcome via Issues. Pull requests are al
 
 For questions or suggestions, please create an Issue.  
 質問や提案がある場合は Issue を作成してください。
-
