@@ -39,7 +39,7 @@ export const useLiff = (liffId: string, ifWebMoveTo: string | null = null) => {
     import("@line/liff")
       .then((liff) => liff.default)
       .then((liff) => {
-        if (liff.getOS() === "web" && ifWebMoveTo) {
+        if (liff.getLineVersion() === null && ifWebMoveTo) {
           window.location.href = ifWebMoveTo;
           return;
         }
