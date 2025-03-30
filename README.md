@@ -80,6 +80,48 @@ const CustomError: React.FC<CustomErrorProps> = ({ error }) => {
 export default CustomError;
 ```
 
+### Mock Mode / モックモード
+
+You can use the mock mode for development without connecting to the LINE platform. This is useful for testing your application locally. Mock mode can be enabled in two ways: using environment variables or by passing a prop to the `LiffProvider`.  
+開発時にLINEプラットフォームに接続せずにモックモードを使用できます。これはローカルでアプリケーションをテストする際に便利です。モックモードは、環境変数を使用するか、`LiffProvider`にプロパティを渡すことで有効化できます。
+
+**Using environment variables:**  
+**環境変数を使用:**
+
+```
+# .env.local
+NEXT_PUBLIC_LIFF_MOCK=true
+```
+
+**Using props:**  
+**プロパティを使用:**
+
+```tsx
+<LiffProvider
+  liffId={String(process.env.NEXT_PUBLIC_LIFF_ID)}
+  mock={true}
+>
+  {children}
+</LiffProvider>
+```
+
+When in mock mode:  
+モックモード時には:
+
+- The LIFF SDK methods are mocked and don't make actual API calls  
+  LIFF SDKのメソッドはモック化され、実際のAPI呼び出しを行いません
+- User profile is set to dummy data with profile picture as `/favicon.ico`  
+  ユーザープロフィールはダミーデータに設定され、プロフィール画像は `/favicon.ico` になります
+- Methods like `sendMessages` and `shareTargetPicker` will display alerts instead of sending actual messages  
+  `sendMessages`や`shareTargetPicker`などのメソッドは、実際のメッセージを送信せずにアラートを表示します
+- An additional `isMock` property is available through `useLiffContext()` to check if the app is running in mock mode  
+  アプリがモックモードで実行されているかどうかを確認するために、`useLiffContext()`を通じて追加の`isMock`プロパティが利用可能です
+
+```tsx
+const { currentUser, liffControls, isMock } = useLiffContext();
+console.log("Mock mode enabled:", isMock);
+```
+
 ### Accessing LIFF Functionality in Components / コンポーネントでの LIFF 機能へのアクセス
 
 You can access the LIFF functionality in your components by using the `useLiffContext` hook.  

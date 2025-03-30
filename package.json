@@ -1,6 +1,6 @@
 {
   "name": "@holykzm/use-liff",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "A custom React hook and provider for LINE Frontend Framework (LIFF).",
   "main": "./dist/useLiff.js",
   "types": "./dist/useLiff.d.ts",
@@ -12,7 +12,8 @@
     "line",
     "react",
     "hook",
-    "provider"
+    "provider",
+    "mock"
   ],
   "author": "Kazuma Horiike",
   "license": "MIT",
